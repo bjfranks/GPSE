@@ -32,7 +32,7 @@ launch () {
 
     run_script="python main.py --cfg ${CONFIG_DIR}/${dataset}-GNN+${pse}.yaml --repeat ${NUM_REPS} "
     run_script+="name_tag ${conv}+${pse} seed ${INIT_SEED} wandb.use ${USE_WANDB} gnn.layer_type ${conv}"
-    full_script="${job_script}${run_script} dataset.name ${dataset} dataset.task_type ${task_type}"
+    full_script="${job_script}${run_script}"
 
     echo $full_script  # print out the command
     eval $full_script  # execute the command

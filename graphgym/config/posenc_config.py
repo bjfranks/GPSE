@@ -161,11 +161,18 @@ def set_cfg_posenc(cfg):
     cfg.randenc_UniformSE.enable = False
     cfg.randenc_UniformSE.dim_pe = 9
 
+    cfg.randenc_UniformOSE.enable = False
+    cfg.randenc_UniformOSE.dim_pe = 9
+
     cfg.randenc_BernoulliSE.enable = False
     cfg.randenc_BernoulliSE.threshold = 0.5
     cfg.randenc_BernoulliSE.dim_pe = 9
 
-    for name in ["NormalRE", "NormalFixedRE", "UniformRE", "BernoulliRE"]:
+    cfg.randenc_BernoulliOSE.enable = False
+    cfg.randenc_BernoulliOSE.threshold = 0.5
+    cfg.randenc_BernoulliOSE.dim_pe = 9
+
+    for name in ["NormalRE", "NormalFixedRE", "UniformRE", "BernoulliRE", "UniformORE", "BernoulliORE"]:
         pecfg = getattr(cfg, f"posenc_{name}")
         pecfg.enable = False
         pecfg.dim_pe = 20

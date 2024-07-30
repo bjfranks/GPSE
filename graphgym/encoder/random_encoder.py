@@ -70,6 +70,7 @@ class NormalFixedRENodeEncoder(RandomNodeEncoder):
         return batch
 
 
+@register_node_encoder("BernoulliORE")
 class BernoulliORENodeEncoder(RandomNodeEncoder):
     def __init__(self, dim_emb, expand_x: bool = False):
         super().__init__(dim_emb, expand_x)
@@ -82,6 +83,7 @@ class BernoulliORENodeEncoder(RandomNodeEncoder):
         return self.elements[:, torch.randperm(num_nodes) % self.elements.shape[1]].float().to(device)
 
 
+@register_node_encoder("UniformORE")
 class UniformORENodeEncoder(RandomNodeEncoder):
 
     def generator(self, num_nodes: int, device: str) -> torch.Tensor:

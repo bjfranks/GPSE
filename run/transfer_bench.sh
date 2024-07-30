@@ -31,6 +31,6 @@ launch () {
 }
 
 launch mnist
-launch cifar
+launch cifar10
 launch peptides-func
 launch peptides-struct

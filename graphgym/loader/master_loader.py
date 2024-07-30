@@ -1236,6 +1236,31 @@ def set_random_se(dataset, pe_types):
 
         dataset.transform_list = [randomSE_Bernoulli]
 
+    if 'UniformOSE' in pe_types:
+        def randomOSE_Uniform(data):
+            N = data.num_nodes
+            D = cfg.randenc_UniformOSE.dim_pe
+            elements = torch.arange(start=0.0, end=1.0, step=1.0 / N).float()
+            data.x = elements[torch.stack([torch.randperm(N) for _ in range(D)])]
+            return data
+
+        dataset.transform_list = [randomOSE_Uniform]
+
+    if 'BernoulliOSE' in pe_types:
+        def randomOSE_Bernoulli(data):
+            N = data.num_nodes
+            D = cfg.randenc_BernoulliOSE.dim_pe
+            #TODO somehow store the following for faster computations
+            con = []
+            for i in range(D):
+                con.append((2 ** (D - 1 - i)) * ((2 ** i) * [0] + (2 ** i) * [1]))
+            elements = torch.tensor(con)
+
+            data.x = elements[:, torch.randperm(N) % elements.shape[1]].float()
+            return data
+
+        dataset.transform_list = [randomOSE_Bernoulli]
+
 
 def set_virtual_node(dataset):
     if dataset.transform_list is None:
