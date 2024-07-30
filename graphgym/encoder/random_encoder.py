@@ -68,3 +68,22 @@ class NormalFixedRENodeEncoder(RandomNodeEncoder):
     def forward(self, batch):
         batch.x = batch.pestat_NormalFixedRE
         return batch
+
+
+class BernoulliORENodeEncoder(RandomNodeEncoder):
+    def __init__(self, dim_emb, expand_x: bool = False):
+        super().__init__(dim_emb, expand_x)
+        con = []
+        for i in range(self.dim_emb):
+            con.append((2 ** (self.dim_emb - 1 - i)) * ((2 ** i) * [0] + (2 ** i) * [1]))
+        self.elements = torch.tensor(con)
+
+    def generator(self, num_nodes: int, device: str) -> torch.Tensor:
+        return self.elements[:, torch.randperm(num_nodes) % self.elements.shape[1]].float().to(device)
+
+
+class UniformORENodeEncoder(RandomNodeEncoder):
+
+    def generator(self, num_nodes: int, device: str) -> torch.Tensor:
+        elements = torch.arange(start=0.0, end=1.0, step=1.0/num_nodes, device=device).float()
+        return elements[torch.stack([torch.randperm(num_nodes) for _ in range(self.dim_emb)])]

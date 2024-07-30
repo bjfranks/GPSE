@@ -3,7 +3,7 @@
 # Global settings
 NUM_REPS=10
 INIT_SEED=1  # we can always extend the number of runs by keeping NUM_REPS=1 and then increment INIT_SEED
-WRAPPER=local  # local, wrapper_msuicer, wrapper_mila
+WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIG_DIR=configs/transfer_bench
 USE_WANDB=False
 #################

@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --partition=gpuidle
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --mem=48G
+
+date
+hostname
+pwd
+
+source ~/GPSE/venv/bin/activate
+
+cd $SLURM_SUBMIT_DIR
+pwd
+
+echo $@
+eval $@
+
+
+echo "All done in sbatch."
+date
