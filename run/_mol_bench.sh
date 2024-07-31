@@ -1,10 +1,10 @@
 #!/usr/bin/bash --login
 
 # Global settings
-NUM_REPS=1
+NUM_REPS=10
 INIT_SEED=1  # we can always extend the number of runs by keeping NUM_REPS=1 and then increment INIT_SEED
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
-CONFIG_DIR=configs/wl_bench
+CONFIG_DIR=configs/mol_bench
 USE_WANDB=False
 #################
 
@@ -22,23 +22,33 @@ fi
 
 launch () {
     dataset=$1
-    pse=$2
+    model=$2
+    pse=$3
 
-    run_script="python main.py --cfg ${CONFIG_DIR}/${dataset}-GIN+${pse}.yaml --repeat ${NUM_REPS} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
+    name="${dataset}-${model}+${pse}"
+    run_script="python main.py --cfg ${CONFIG_DIR}/${name}.yaml --repeat ${NUM_REPS} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
     full_script="${job_script}${run_script}"
 
     echo $full_script  # print out the command
     eval $full_script  # execute the command
 }
 
-launch csl none
-launch csl rand
-launch csl LapPE
-launch csl RWSE
-launch csl GPSE
+# ZINC
+launch zinc GPS GPSEO
 
-launch exp none
-launch exp rand
-launch exp LapPE
-launch exp RWSE
-launch exp GPSE
+launch zinc GIN GPSEO
+
+launch zinc GCN GPSEO
+
+launch zinc GatedGCN GPSEO
+
+launch zinc Transformer GPSEO
+
+# PCQM4Mv2-subset
+launch pcqm4msubset GPS GPSEO
+
+# MolHIV
+launch molhiv GPS GPSEO
+
+# MolPCBA
+launch molpcba GPS GPSEO

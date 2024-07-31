@@ -31,14 +31,5 @@ launch () {
     eval $full_script  # execute the command
 }
 
-launch csl none
-launch csl rand
-launch csl LapPE
-launch csl RWSE
 launch csl GPSE
-
-launch exp none
-launch exp rand
-launch exp LapPE
-launch exp RWSE
 launch exp GPSE
