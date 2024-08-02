@@ -20,7 +20,7 @@ run_script+="seed ${INIT_SEED} wandb.use ${USE_WANDB} train.record_individual_sc
 
 if [[ $WRAPPER != "local" ]]; then
     mkdir -p ${ROOT_DIR}/slurm_history
-    run_script="sbatch -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script}"
+    run_script="sbatch -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script} dataset.umg_split True"
 fi
 
 launch () {
