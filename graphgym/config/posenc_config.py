@@ -23,12 +23,16 @@ def set_cfg_posenc(cfg):
     cfg.randenc_NormalSE = CN()
     cfg.randenc_UniformSE = CN()
     cfg.randenc_BernoulliSE = CN()
+    cfg.randenc_UniformOSE = CN()
+    cfg.randenc_BernoulliOSE = CN()
 
     # TODO: replace The aboves with the followings
     cfg.posenc_NormalRE = CN()
     cfg.posenc_NormalFixedRE = CN()
     cfg.posenc_UniformRE = CN()
     cfg.posenc_BernoulliRE = CN()
+    cfg.posenc_UniformORE = CN()
+    cfg.posenc_BernoulliORE = CN()
 
     # Argument group for each Graph Encoding class.
     cfg.graphenc_CycleGE = CN()
