@@ -337,6 +337,13 @@ def load_dataset_master(format, name, dataset_dir):
                                                    cfg.dataset.umg_test_ratio,
                                                    cfg.dataset.umg_random_seed)
 
+    if cfg.dataset.umg_split:
+        dataset = umg_split(dataset,
+                            cfg.dataset.umg_train_ratio,
+                            cfg.dataset.umg_val_ratio,
+                            cfg.dataset.umg_test_ratio,
+                            cfg.dataset.umg_random_seed)
+
     # Precompute necessary statistics for positional encodings.
     pe_enabled_list = []
     for key, pecfg in cfg.items():
@@ -1184,6 +1191,64 @@ def get_unique_mol_graphs_via_smiles(
     dataset._indices = None
 
     logging.info("[*] Dataset reduced to unique molecular structure graphs\n"
+                 f"    Number of graphs before: {old_size:,}\n"
+                 f"    Number of graphs after: {new_size:,}\n"
+                 f"    Train size: {len(new_split_idxs[0]):,} "
+                 f"(first five: {new_split_idxs[0][:5]})\n"
+                 f"    Validation size: {len(new_split_idxs[1]):,} "
+                 f"(first five: {new_split_idxs[1][:5]})\n"
+                 f"    Test size: {len(new_split_idxs[2]):,} "
+                 f"(first five: {new_split_idxs[2][:5]})\n"
+                 f"    {dataset.data}\n")
+
+    return dataset
+
+
+def umg_split(
+    dataset,
+    train_ratio: float,
+    val_ratio: float,
+    test_ratio: float,
+    random_seed: int = 0,
+):
+    if (sum_ratio := train_ratio + val_ratio + test_ratio) > 1:
+        raise ValueError("Total ratio (train + val + test) must be below 1 "
+                         f"got {sum_ratio:.2f}")
+    old_size = len(dataset)
+    num_data = len(dataset)
+    split_points = [int(num_data * train_ratio),
+                    int(num_data * (1 - val_ratio - test_ratio)),
+                    int(num_data * (1 - test_ratio))]
+    rng = np.random.default_rng(random_seed)
+    new_split_idxs = np.split(rng.permutation(num_data), split_points)
+    new_split_idxs.pop(1)  # pop the fill-in split
+    # Reorder graphs into train/val/test (poentially remove the fill-in split)
+    new_points = [dataset[i] for i in np.hstack(new_split_idxs)]
+    new_size = len(new_points)
+
+    if test_ratio == 1:
+        # Evaluation only, pad "training" and "evaluation" set with the first
+        # graph
+        new_split_idxs[0] = np.array([num_data])
+        new_split_idxs[1] = np.array([num_data + 1])
+        new_points.append(new_points[-1])
+        new_points.append(new_points[-1])
+
+    # E.g. [[0, 1], [0, 1, 2], [0]]
+    dataset.split_idxs = [torch.arange(idxs.size) for idxs in new_split_idxs]
+    if train_ratio != 1:
+        # E.g. [[0, 1], [2, 3, 4], [5]]
+        for i in range(1, len(dataset.split_idxs)):
+            dataset.split_idxs[i] += dataset.split_idxs[i - 1][-1] + 1
+
+    dataset.data, dataset.slices = dataset.collate(new_points)
+    # We need to remove _data_list because its presence will bypass the
+    # indentded data slicing using the .slices attribute.
+    # https://github.com/pyg-team/pytorch_geometric/blob/f0c72186286f257778c1d9293cfd0d35472d30bb/torch_geometric/data/in_memory_dataset.py#L75-L94
+    dataset._data_list = [None] * len(dataset)
+    dataset._indices = None
+
+    logging.info("[*] Dataset reduced to fit amount of requested data\n"
                  f"    Number of graphs before: {old_size:,}\n"
                  f"    Number of graphs after: {new_size:,}\n"
                  f"    Train size: {len(new_split_idxs[0]):,} "

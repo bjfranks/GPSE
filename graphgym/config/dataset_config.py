@@ -29,6 +29,7 @@ def dataset_cfg(cfg):
     # Reduce the molecular graph dataset to only contain unique structured
     # graphs (ignoring atom and bond types)
     cfg.dataset.unique_mol_graphs = False
+    cfg.dataset.umg_split = False
     cfg.dataset.umg_train_ratio = 0.8
     cfg.dataset.umg_val_ratio = 0.1
     cfg.dataset.umg_test_ratio = 0.1
