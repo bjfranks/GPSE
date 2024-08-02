@@ -29,11 +29,15 @@ PE_TYPES = [
     "NormalRE",
     "NormalFixedRE",
     "UniformRE",
+    "UniformORE",
+    "BernoulliORE",
 ]
 RANDSE_TYPES = [
     "NormalSE",
     "UniformSE",
     "BernoulliSE",
+    "UniformOSE",
+    "BernoulliOSE",
 ]
 GRAPH_ENC_TYPES = [
     "EigVals",
