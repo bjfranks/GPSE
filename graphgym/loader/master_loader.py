@@ -1306,7 +1306,7 @@ def set_random_se(dataset, pe_types):
             N = data.num_nodes
             D = cfg.randenc_UniformOSE.dim_pe
             elements = torch.arange(start=0.0, end=1.0, step=1.0 / N).float()
-            data.x = elements[torch.stack([torch.randperm(N) for _ in range(D)])]
+            data.x = elements[torch.stack([torch.randperm(N) for _ in range(D)], dim=1)]
             return data
 
         dataset.transform_list = [randomOSE_Uniform]
