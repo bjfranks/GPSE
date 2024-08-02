@@ -16,7 +16,7 @@ dataset:
   umg_train_ratio: 0.9
   umg_val_ratio: 0.05
   umg_test_ratio: 0.05
-  input_node_encoders: NormalOSE
+  input_node_encoders: UniformOSE
   output_node_encoders: ElstaticPE+LapPE+RWSE+HKdiagSE
   output_graph_encoders: EigVals+CycleGE
 graph_norm:
@@ -42,7 +42,7 @@ posenc_HKdiagSE:
   enable: true
   kernel:
     times_func: range(1,21)
-randenc_NormalOSE:
+randenc_UniformOSE:
   enable: true
   dim_pe: 20
 graphenc_CycleGE:
