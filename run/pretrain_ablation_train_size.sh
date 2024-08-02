@@ -29,8 +29,9 @@ launch () {
     eval $command  # execute the command
 }
 
-launch "${run_script} name_tag train_size_5 dataset.umg_train_ratio 0.05"
-launch "${run_script} name_tag train_size_10 dataset.umg_train_ratio 0.1"
-launch "${run_script} name_tag train_size_20 dataset.umg_train_ratio 0.2"
-launch "${run_script} name_tag train_size_40 dataset.umg_train_ratio 0.4"
-launch "${run_script} name_tag train_size_80 dataset.umg_train_ratio 0.8"
+launch "${run_script} name_tag train_size_64 dataset.umg_train_ratio 0.015625"
+launch "${run_script} name_tag train_size_32 dataset.umg_train_ratio 0.03125"
+launch "${run_script} name_tag train_size_16 dataset.umg_train_ratio 0.0625"
+launch "${run_script} name_tag train_size_8 dataset.umg_train_ratio 0.125"
+launch "${run_script} name_tag train_size_4 dataset.umg_train_ratio 0.25"
+launch "${run_script} name_tag train_size_2 dataset.umg_train_ratio 0.5"
