@@ -4,7 +4,7 @@
 NUM_REPS=1
 INIT_SEED=1  # we can always extend the number of runs by keeping NUM_REPS=1 and then increment INIT_SEED
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
-CONFIGs=(
+CONFIGS=(
 AllPSE
 GPSE
 LapPE
@@ -23,8 +23,6 @@ echo ROOT_DIR=$ROOT_DIR
 cd $ROOT_DIR
 
 for config in ${CONFIGS[@]}; do
-  echo ROOT_DIR=$ROOT_DIR
-    echo ROOT_DIR=$ROOT_DIR
     run_script="python main.py --cfg configs/mol_bench/zinc-GPS+${config},yaml --repeat ${NUM_REPS} "
     run_script+="seed ${INIT_SEED} wandb.use ${USE_WANDB} train.record_individual_scores True"
 
