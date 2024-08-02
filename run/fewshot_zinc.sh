@@ -23,6 +23,8 @@ echo ROOT_DIR=$ROOT_DIR
 cd $ROOT_DIR
 
 for config in ${CONFIGS[@]}; do
+  echo ROOT_DIR=$ROOT_DIR
+    echo ROOT_DIR=$ROOT_DIR
     run_script="python main.py --cfg configs/mol_bench/zinc-GPS+${config},yaml --repeat ${NUM_REPS} "
     run_script+="seed ${INIT_SEED} wandb.use ${USE_WANDB} train.record_individual_scores True"
 
