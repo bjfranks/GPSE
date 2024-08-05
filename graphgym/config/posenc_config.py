@@ -173,7 +173,6 @@ def set_cfg_posenc(cfg):
     cfg.randenc_BernoulliSE.dim_pe = 9
 
     cfg.randenc_BernoulliOSE.enable = False
-    cfg.randenc_BernoulliOSE.threshold = 0.5
     cfg.randenc_BernoulliOSE.dim_pe = 9
 
     for name in ["NormalRE", "NormalFixedRE", "UniformRE", "BernoulliRE", "UniformORE", "BernoulliORE"]:

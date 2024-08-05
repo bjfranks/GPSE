@@ -45,5 +45,3 @@ launch zinc GatedGCN GPSE
 # MolHIV
 launch molhiv GPS GPSE
 
-# MolPCBA
-launch molpcba GPS GPSE

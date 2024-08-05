@@ -1262,6 +1262,19 @@ def umg_split(
     return dataset
 
 
+precomputed_rand_map = None
+
+
+def get_precomputed_rand_map(D): #Lazily computes the binary map when it is accessed.
+    global precomputed_rand_map
+    if precomputed_rand_map is None:
+        con = []
+        for i in range(D):
+            con.append((2 ** (D - 1 - i)) * ((2 ** i) * [0] + (2 ** i) * [1]))
+        precomputed_rand_map = torch.tensor(con).T
+    return precomputed_rand_map
+
+
 def set_random_se(dataset, pe_types):
 
     if 'FixedSE' in pe_types:
@@ -1315,13 +1328,8 @@ def set_random_se(dataset, pe_types):
         def randomOSE_Bernoulli(data):
             N = data.num_nodes
             D = cfg.randenc_BernoulliOSE.dim_pe
-            #TODO somehow store the following for faster computations
-            con = []
-            for i in range(D):
-                con.append((2 ** (D - 1 - i)) * ((2 ** i) * [0] + (2 ** i) * [1]))
-            elements = torch.tensor(con)
-
-            data.x = elements[:, torch.randperm(N) % elements.shape[1]].float()
+            precomputed_rand_map = get_precomputed_rand_map(D)
+            data.x = precomputed_rand_map[:, torch.randperm(N) % precomputed_rand_map.shape[1]].float()
             return data
 
         dataset.transform_list = [randomOSE_Bernoulli]
