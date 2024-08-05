@@ -1,8 +1,13 @@
 #!/usr/bin/bash --login
 
+if [ $# -eq 0 ]; then
+    echo "No seed provided. Usage: $0 <seed>"
+    exit 1
+fi
+
 # Global settings
 NUM_REPS=1
-INIT_SEED=1  # we can always extend the number of runs by keeping NUM_REPS=1 and then increment INIT_SEED
+INIT_SEED=$1 
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
 AllPSE
