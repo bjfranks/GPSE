@@ -34,14 +34,20 @@ def gpse_process_batch(model, batch) -> Tuple[torch.Tensor, torch.Tensor]:
     # Prepare input distributions for GPSE
     if rand_type == "NormalSE":
         rand = np.random.normal(loc=0, scale=1.0, size=(n, dim_in))
+        rand = torch.from_numpy(rand.astype("float32"))
     elif rand_type == "UniformSE":
         rand = np.random.uniform(low=0.0, high=1.0, size=(n, dim_in))
+        rand = torch.from_numpy(rand.astype("float32"))
     elif rand_type == "BernoulliSE":
         rand = np.random.uniform(low=0.0, high=1.0, size=(n, dim_in))
         rand = (rand < cfg.randenc_BernoulliSE.threshold)
+        rand = torch.from_numpy(rand.astype("float32"))
+    elif rand_type == "UniformOSE":
+        elements = torch.arange(start=0.0, end=1.0, step=1.0 / n).float()
+        rand = elements[torch.stack([torch.randperm(n) for _ in range(dim_in)], dim=1)]
     else:
         raise ValueError(f"Unknown {rand_type=!r}")
-    batch.x = torch.from_numpy(rand.astype("float32"))
+    batch.x = rand
 
     if cfg.posenc_GPSE.virtual_node:
         # HACK: We need to reset virtual node features to zeros to match the
