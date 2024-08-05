@@ -27,28 +27,23 @@ launch () {
 
     name="${dataset}-${model}+${pse}"
     run_script="python main.py --cfg ${CONFIG_DIR}/${name}.yaml --repeat ${NUM_REPS} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
-    full_script="${job_script}${run_script}"
+    full_script="${job_script}${run_script} name_tag ${model}+GPSEO posenc_GPSE.model_dir pretrained_models/gpseo_molpcba.pt posenc_GPSE.rand_type UniformOSE"
 
-    echo $full_script  # print out the command
-    eval $full_script  # execute the command
+    echo "$full_script"  # print out the command
+    eval "$full_script"  # execute the command
 }
 
 # ZINC
-launch zinc GPS GPSEO
+launch zinc GPS GPSE
 
-launch zinc GIN GPSEO
+launch zinc GIN GPSE
 
-launch zinc GCN GPSEO
+launch zinc GCN GPSE
 
-launch zinc GatedGCN GPSEO
-
-launch zinc Transformer GPSEO
-
-# PCQM4Mv2-subset
-launch pcqm4msubset GPS GPSEO
+launch zinc GatedGCN GPSE
 
 # MolHIV
-launch molhiv GPS GPSEO
+launch molhiv GPS GPSE
 
 # MolPCBA
-launch molpcba GPS GPSEO
+launch molpcba GPS GPSE
