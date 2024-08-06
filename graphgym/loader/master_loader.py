@@ -1156,7 +1156,6 @@ def get_unique_mol_graphs_via_smiles(
             delattr(g, "smiles")
             delattr(g, "edge_attr")
             unique_graphs.append(g)
-            print(g)
 
     # Add arbitrary new "unique" graphs. Below random regular graphs are added.
     # They could be non-unique but this is very unlikely.
@@ -1164,6 +1163,7 @@ def get_unique_mol_graphs_via_smiles(
         for reg in range(4, 10):
             for _ in range(200):
                 g = from_networkx(nx.random_regular_graph(reg, 50))
+                g.x = torch.zeros(50, 9)
                 unique_graphs.append(g)
 
     num_unique = len(unique_graphs)
