@@ -7,7 +7,7 @@ fi
 
 # Global settings
 NUM_REPS=1
-INIT_SEED=$1 
+INIT_SEED=$1
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
 AllPSE

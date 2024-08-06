@@ -23,7 +23,7 @@ from torch_geometric.graphgym.loader import (load_ogb, load_pyg,
 from torch_geometric.graphgym.model_builder import GraphGymModule
 from torch_geometric.graphgym.register import register_loader
 from torch_geometric.loader import DataLoader
-from torch_geometric.utils import from_smiles
+from torch_geometric.utils import from_smiles, from_networkx
 from torch_scatter import scatter_sum
 from tqdm import tqdm, trange
 from yacs.config import CfgNode as CN
@@ -1157,6 +1157,14 @@ def get_unique_mol_graphs_via_smiles(
             delattr(g, "edge_attr")
             unique_graphs.append(g)
 
+    # Add arbitrary new "unique" graphs. Below random regular graphs are added.
+    # They could be non-unique but this is very unlikely.
+    if cfg.dataset.extra_graphs:
+        for reg in range(4, 10):
+            for _ in range(200):
+                g = from_networkx(nx.random_regular_graph(reg, 50))
+                unique_graphs.append(g)
+
     num_unique = len(unique_graphs)
     split_points = [int(num_unique * train_ratio),
                     int(num_unique * (1 - val_ratio - test_ratio)),
@@ -1175,6 +1183,7 @@ def get_unique_mol_graphs_via_smiles(
         new_split_idxs[1] = np.array([num_unique + 1])
         unique_graphs.append(unique_graphs[-1])
         unique_graphs.append(unique_graphs[-1])
+
 
     # E.g. [[0, 1], [0, 1, 2], [0]]
     dataset.split_idxs = [torch.arange(idxs.size) for idxs in new_split_idxs]
