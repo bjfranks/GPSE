@@ -1156,6 +1156,7 @@ def get_unique_mol_graphs_via_smiles(
             delattr(g, "smiles")
             delattr(g, "edge_attr")
             unique_graphs.append(g)
+            print(g)
 
     # Add arbitrary new "unique" graphs. Below random regular graphs are added.
     # They could be non-unique but this is very unlikely.
