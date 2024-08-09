@@ -159,6 +159,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
     Returns:
         Extended PyG Data object.
     """
+    print(pe_types)
     _check_all_types(pe_types)
 
     # Basic preprocessing of the input graph.
@@ -166,6 +167,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
         N = data.num_nodes  # Explicitly given number of nodes, e.g. ogbg-ppa
     else:
         N = data.x.shape[0]  # Number of nodes, including disconnected nodes.
+    print(N)
     laplacian_norm_type = cfg.posenc_LapPE.eigen.laplacian_norm.lower()
     if laplacian_norm_type == 'none':
         laplacian_norm_type = None
@@ -173,6 +175,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
         undir_edge_index = data.edge_index
     else:
         undir_edge_index = to_undirected(data.edge_index)
+    print(undir_edge_index)
 
     # Eigen values and vectors.
     evals, evects = None, None
