@@ -34,6 +34,8 @@ def pre_transform_in_memory(dataset, transform_func, show_progress=False):
         return dataset
 
     data_list = []
+    print("test")
+    print(len(dataset))
     for i in range(len(dataset)):
         print(i)
         data_list.append(transform_func(dataset.get(i)))
