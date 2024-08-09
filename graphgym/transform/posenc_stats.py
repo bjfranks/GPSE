@@ -175,7 +175,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
         undir_edge_index = data.edge_index
     else:
         undir_edge_index = to_undirected(data.edge_index)
-    print(undir_edge_index)
+    print()
 
     # Eigen values and vectors.
     evals, evects = None, None
