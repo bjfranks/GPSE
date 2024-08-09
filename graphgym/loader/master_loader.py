@@ -1339,7 +1339,7 @@ def set_random_se(dataset, pe_types):
             N = data.num_nodes
             D = cfg.randenc_BernoulliOSE.dim_pe
             precomputed_rand_map = get_precomputed_rand_map(D)
-            data.x = precomputed_rand_map[:, torch.randperm(N) % precomputed_rand_map.shape[1]].float()
+            data.x = precomputed_rand_map[torch.randperm(N) % precomputed_rand_map.shape[1], :].float()
             return data
 
         dataset.transform_list = [randomOSE_Bernoulli]
