@@ -173,7 +173,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
         undir_edge_index = data.edge_index
     else:
         undir_edge_index = to_undirected(data.edge_index)
-
+    print("Start", flush=True)
     # Eigen values and vectors.
     evals, evects = None, None
     if 'LapPE' in pe_types or 'EquivStableLapPE' in pe_types:
@@ -204,7 +204,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
             eigvec_norm=eigvec_norm,
             skip_zero_freq=skip_zero_freq,
             eigvec_abs=eigvec_abs)
-
+    print("LapPE", flush=True)
     if 'SignNet' in pe_types:
         # Eigen-decomposition with numpy for SignNet.
         norm_type = cfg.posenc_SignNet.eigen.laplacian_norm.lower()
@@ -222,7 +222,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
             skip_zero_freq=cfg.posenc_SignNet.eigen.skip_zero_freq,
             eigvec_abs=cfg.posenc_SignNet.eigen.eigvec_abs)
         data.EigVals = data.eigvals_sn
-
+    print("SignNet", flush=True)
     # Random Walks.
     if 'RWSE' in pe_types or 'RWGE' in pe_types:
         if 'RWSE' in pe_types:
@@ -236,7 +236,7 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
                                           edge_index=data.edge_index,
                                           num_nodes=N)
         data.pestat_RWSE = rw_landing
-
+    print("RWSE", flush=True)
     # Heat Kernels.
     if 'HKdiagSE' in pe_types or 'HKfullPE' in pe_types:
         # Get the eigenvalues and eigenvectors of the regular Laplacian,
@@ -270,20 +270,20 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
                                             kernel_times=kernel_param.times,
                                             space_dim=0)
             data.pestat_HKdiagSE = hk_diag
-
+    print("HKdiagSE", flush=True)
     # Electrostatic interaction inspired kernel.
     if 'ElstaticPE' in pe_types:
         elstatic = get_electrostatic_function_encoding(undir_edge_index, N)
         data.pestat_ElstaticPE = elstatic
-
+    print("ElstaticPE", flush=True)
     if 'CycleGE' in pe_types:
         kernel_param = cfg.graphenc_CycleGE.kernel
         data.gestat_CycleGE = count_cycles(kernel_param.times, data)
-
+    print("CycleGE", flush=True)
     if 'NormalFixedRE' in pe_types:
         shape = (data.num_nodes, cfg.posenc_NormalFixedRE.dim_pe)
         data.pestat_NormalFixedRE = torch.normal(0, 1, shape)
-
+    print("NormalFixedRE", flush=True)
     # Set up PE tasks if the input and output PEs are defined
     in_node_encs = cfg.dataset.input_node_encoders
     out_node_encs = cfg.dataset.output_node_encoders
