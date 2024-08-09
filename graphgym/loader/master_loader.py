@@ -1162,8 +1162,8 @@ def get_unique_mol_graphs_via_smiles(
     if cfg.dataset.extra_graphs:
         for reg in range(4, 10):
             for _ in range(200):
-                g = from_networkx(nx.random_regular_graph(reg, 50))
-                g.x = torch.zeros(50, 9)
+                g = from_networkx(nx.random_regular_graph(reg, 24))
+                g.x = torch.zeros(24, 9)
                 unique_graphs.append(g)
 
     num_unique = len(unique_graphs)
