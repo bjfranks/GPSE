@@ -34,10 +34,10 @@ def pre_transform_in_memory(dataset, transform_func, show_progress=False):
         return dataset
 
     data_list = []
-    print("test")
-    print(len(dataset))
+    print("test", flush=True)
+    print(len(dataset), flush=True)
     for i in range(len(dataset)):
-        print(i)
+        print(i, flush=True)
         data_list.append(transform_func(dataset.get(i)))
     #data_list = [transform_func(dataset.get(i))
     #             for i in tqdm(range(len(dataset)),
