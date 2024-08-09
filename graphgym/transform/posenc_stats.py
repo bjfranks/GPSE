@@ -159,7 +159,6 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
     Returns:
         Extended PyG Data object.
     """
-    print(pe_types)
     _check_all_types(pe_types)
 
     # Basic preprocessing of the input graph.
@@ -167,7 +166,6 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
         N = data.num_nodes  # Explicitly given number of nodes, e.g. ogbg-ppa
     else:
         N = data.x.shape[0]  # Number of nodes, including disconnected nodes.
-    print(N)
     laplacian_norm_type = cfg.posenc_LapPE.eigen.laplacian_norm.lower()
     if laplacian_norm_type == 'none':
         laplacian_norm_type = None
@@ -175,11 +173,9 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
         undir_edge_index = data.edge_index
     else:
         undir_edge_index = to_undirected(data.edge_index)
-    print()
 
     # Eigen values and vectors.
     evals, evects = None, None
-    print("Start")
     if 'LapPE' in pe_types or 'EquivStableLapPE' in pe_types:
         # Eigen-decomposition with numpy, can be reused for Heat kernels.
         L = to_scipy_sparse_matrix(
@@ -208,7 +204,6 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
             eigvec_norm=eigvec_norm,
             skip_zero_freq=skip_zero_freq,
             eigvec_abs=eigvec_abs)
-    print("LapPE done")
 
     if 'SignNet' in pe_types:
         # Eigen-decomposition with numpy for SignNet.
@@ -227,7 +222,6 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
             skip_zero_freq=cfg.posenc_SignNet.eigen.skip_zero_freq,
             eigvec_abs=cfg.posenc_SignNet.eigen.eigvec_abs)
         data.EigVals = data.eigvals_sn
-    print("SignNet done")
 
     # Random Walks.
     if 'RWSE' in pe_types or 'RWGE' in pe_types:
@@ -242,7 +236,6 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
                                           edge_index=data.edge_index,
                                           num_nodes=N)
         data.pestat_RWSE = rw_landing
-    print("RWSE done")
 
     # Heat Kernels.
     if 'HKdiagSE' in pe_types or 'HKfullPE' in pe_types:
@@ -277,23 +270,19 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
                                             kernel_times=kernel_param.times,
                                             space_dim=0)
             data.pestat_HKdiagSE = hk_diag
-    print("HKdiagSE and HKfullPE done")
 
     # Electrostatic interaction inspired kernel.
     if 'ElstaticPE' in pe_types:
         elstatic = get_electrostatic_function_encoding(undir_edge_index, N)
         data.pestat_ElstaticPE = elstatic
-    print("ElstaticPE done")
 
     if 'CycleGE' in pe_types:
         kernel_param = cfg.graphenc_CycleGE.kernel
         data.gestat_CycleGE = count_cycles(kernel_param.times, data)
-    print("CycleGE done")
 
     if 'NormalFixedRE' in pe_types:
         shape = (data.num_nodes, cfg.posenc_NormalFixedRE.dim_pe)
         data.pestat_NormalFixedRE = torch.normal(0, 1, shape)
-    print("NormalFixedRE done")
 
     # Set up PE tasks if the input and output PEs are defined
     in_node_encs = cfg.dataset.input_node_encoders
@@ -304,7 +293,6 @@ def compute_posenc_stats(data, pe_types, is_undirected, cfg):
                for item in list(in_node_encs) + list(out_node_encs)):
         _combine_encs(data, in_node_encs, out_node_encs, out_graph_encs, cfg)
 
-    print("End")
     return data
 
 
