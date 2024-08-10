@@ -21,7 +21,7 @@ cd $ROOT_DIR
 
 if [[ $WRAPPER != "local" ]]; then
     mkdir -p ${ROOT_DIR}/slurm_history
-    job_script="sbatch -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb "
+    job_script="sbatch -c 5 --mem=45GB -t 2-00:00:00 -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb "
 fi
 
 launch () {
