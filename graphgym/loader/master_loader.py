@@ -1160,10 +1160,10 @@ def get_unique_mol_graphs_via_smiles(
     # Add arbitrary new "unique" graphs. Below random regular graphs are added.
     # They could be non-unique but this is very unlikely.
     if cfg.dataset.extra_graphs:
-        for reg in range(4, 10):
-            for _ in range(200):
-                g = from_networkx(nx.random_regular_graph(reg, 50))
-                g.x = torch.zeros(50, 9)
+        for reg in range(4, 6):
+            for _ in range(50):
+                g = from_networkx(nx.random_regular_graph(reg, 24))
+                g.x = torch.zeros(24, 9)
                 unique_graphs.append(g)
 
     num_unique = len(unique_graphs)
@@ -1339,7 +1339,7 @@ def set_random_se(dataset, pe_types):
             N = data.num_nodes
             D = cfg.randenc_BernoulliOSE.dim_pe
             precomputed_rand_map = get_precomputed_rand_map(D)
-            data.x = precomputed_rand_map[:, torch.randperm(N) % precomputed_rand_map.shape[1]].float()
+            data.x = precomputed_rand_map[torch.randperm(N) % precomputed_rand_map.shape[1], :].float()
             return data
 
         dataset.transform_list = [randomOSE_Bernoulli]

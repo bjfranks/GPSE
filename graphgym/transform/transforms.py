@@ -33,11 +33,15 @@ def pre_transform_in_memory(dataset, transform_func, show_progress=False):
     if transform_func is None:
         return dataset
 
-    data_list = [transform_func(dataset.get(i))
-                 for i in tqdm(range(len(dataset)),
-                               disable=not show_progress,
-                               mininterval=10,
-                               miniters=len(dataset)//20)]
+    data_list = []
+    for i in range(len(dataset)):
+        print(i, dataset.get(i), flush=True)
+        data_list.append(transform_func(dataset.get(i)))
+    #data_list = [transform_func(dataset.get(i))
+    #             for i in tqdm(range(len(dataset)),
+    #                           disable=not show_progress,
+    #                           mininterval=10,
+    #                           miniters=len(dataset)//20)]
     data_list = list(filter(None, data_list))
 
     dataset._indices = None

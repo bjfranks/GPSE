@@ -4,6 +4,7 @@ from typing import List, Optional, Set, Tuple
 import networkx as nx
 import torch
 from torch import Tensor
+from torch_geometric.utils import to_networkx, from_networkx
 
 
 class HamiltonianCycle:
@@ -184,12 +185,12 @@ def count_cycles(k_list: List[int], data):
         raise ValueError("k_list must be a non-empty list of integers, "
                          f"got {k_list=!r}")
 
-    hamcycles = get_all_k_hamcycles(data.edge_index, data.num_nodes,
-                                    max(k_list), False)
+    graph = to_networkx(data)
+    cycles = nx.simple_cycles(graph, length_bound=max(k_list))
 
     count_dict = {k: 0 for k in k_list}
-    for hc in hamcycles:
-        if (size := len(hc)) in count_dict:
+    for cycle in cycles:
+        if (size := len(cycle)) in count_dict:
             count_dict[size] += 1
     cycle_counts = [count_dict[k] for k in k_list]
 

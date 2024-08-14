@@ -48,7 +48,7 @@ def gpse_process_batch(model, batch) -> Tuple[torch.Tensor, torch.Tensor]:
     elif rand_type == "BernoulliOSE":
         from ..loader.master_loader import get_precomputed_rand_map
         precomputed_rand_map = get_precomputed_rand_map(dim_in)
-        rand = precomputed_rand_map[:, torch.randperm(n) % precomputed_rand_map.shape[1]].float()
+        rand = precomputed_rand_map[torch.randperm(n) % precomputed_rand_map.shape[1], :].float()
     else:
         raise ValueError(f"Unknown {rand_type=!r}")
     batch.x = rand
