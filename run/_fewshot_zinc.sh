@@ -38,11 +38,11 @@ for config in ${CONFIGS[@]}; do
         eval $command  # execute the command
     }
 
-    launch "${run_script} name_tag "+$3+"train_size_64 dataset.umg_train_ratio 0.0125"
-    launch "${run_script} name_tag "+$3+"train_size_32 dataset.umg_train_ratio 0.025"
-    launch "${run_script} name_tag "+$3+"train_size_16 dataset.umg_train_ratio 0.05"
-    launch "${run_script} name_tag "+$3+"train_size_8 dataset.umg_train_ratio 0.1"
-    launch "${run_script} name_tag "+$3+"train_size_4 dataset.umg_train_ratio 0.2"
-    launch "${run_script} name_tag "+$3+"train_size_2 dataset.umg_train_ratio 0.4"
-    launch "${run_script} name_tag "+$3+"train_size_1"
+    launch "${run_script} name_tag "$3"train_size_64 dataset.umg_train_ratio 0.0125"
+    launch "${run_script} name_tag "$3"train_size_32 dataset.umg_train_ratio 0.025"
+    launch "${run_script} name_tag "$3"train_size_16 dataset.umg_train_ratio 0.05"
+    launch "${run_script} name_tag "$3"train_size_8 dataset.umg_train_ratio 0.1"
+    launch "${run_script} name_tag "$3"train_size_4 dataset.umg_train_ratio 0.2"
+    launch "${run_script} name_tag "$3"train_size_2 dataset.umg_train_ratio 0.4"
+    launch "${run_script} name_tag "$3"train_size_1"
 done
