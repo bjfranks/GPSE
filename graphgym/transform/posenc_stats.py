@@ -33,6 +33,7 @@ PE_TYPES = [
     "BernoulliORE",
 ]
 RANDSE_TYPES = [
+    "FixedSE",
     "NormalSE",
     "UniformSE",
     "BernoulliSE",
