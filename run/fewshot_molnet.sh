@@ -12,9 +12,9 @@ WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
 AllPSE
 GPSE
+GraphLog
+LapPE+RWSE
 LapPE
-none
-rand
 RWSE
 )
 USE_WANDB=False
