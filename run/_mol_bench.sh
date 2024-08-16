@@ -27,7 +27,7 @@ launch () {
 
     name="${dataset}-${model}+${pse}"
     run_script="python main.py --cfg ${CONFIG_DIR}/${name}.yaml --repeat ${NUM_REPS} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
-    full_script="${job_script}${run_script} name_tag ${model}+GPSEO posenc_GPSE.model_dir pretrained_models/gpseo_molpcba.pt posenc_GPSE.rand_type UniformOSE"
+    full_script="${job_script}${run_script} name_tag ${model}+GPSEOBE posenc_GPSE.model_dir pretrained_models/gpseobe_molpcba.pt posenc_GPSE.rand_type BernoulliOSE"
 
     echo "$full_script"  # print out the command
     eval "$full_script"  # execute the command
