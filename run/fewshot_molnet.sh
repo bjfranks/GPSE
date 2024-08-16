@@ -6,8 +6,8 @@ if [ $# -eq 0 ]; then
 fi
 
 # Global settings
-NUM_REPS=1
-INIT_SEED=$1
+NUM_REPS=10
+INIT_SEED=1
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
 AllPSE
@@ -28,12 +28,12 @@ echo ROOT_DIR=$ROOT_DIR
 cd $ROOT_DIR
 
 for config in ${CONFIGS[@]}; do
-    run_script="python main.py --cfg configs/molnet_bench/$2-GINE+${config}.yaml --repeat ${NUM_REPS} "
+    run_script="python main.py --cfg configs/molnet_bench/$1-GINE+${config}.yaml --repeat ${NUM_REPS} "
     run_script+="seed ${INIT_SEED} wandb.use ${USE_WANDB} train.record_individual_scores True"
 
     if [[ $WRAPPER != "local" ]]; then
         mkdir -p ${ROOT_DIR}/slurm_history
-        run_script="sbatch -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script} dataset.umg_split True"
+        run_script="sbatch -t 0-01:00:00 -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script} dataset.umg_split True"
     fi
 
     launch () {
