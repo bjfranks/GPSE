@@ -1,13 +1,8 @@
 #!/usr/bin/bash --login
 
-if [ $# -eq 0 ]; then
-    echo "No seed provided. Usage: $0 <seed>"
-    exit 1
-fi
-
 # Global settings
-NUM_REPS=10
-INIT_SEED=1
+NUM_REPS=$2
+INIT_SEED=$3
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
 AllPSE
