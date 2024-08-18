@@ -32,7 +32,10 @@ def gpse_process_batch(model, batch) -> Tuple[torch.Tensor, torch.Tensor]:
                              "is specified correctly)")
 
     # Prepare input distributions for GPSE
-    if rand_type == "NormalSE":
+    if rand_type == "FixedSE":
+        rand = np.full(shape=(n, dim_in), fill_value=1)
+        rand = torch.from_numpy(rand.astype('float32'))
+    elif rand_type == "NormalSE":
         rand = np.random.normal(loc=0, scale=1.0, size=(n, dim_in))
         rand = torch.from_numpy(rand.astype("float32"))
     elif rand_type == "UniformSE":

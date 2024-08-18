@@ -1,8 +1,8 @@
 #!/usr/bin/bash --login
 
 # Global settings
-NUM_REPS=10
-INIT_SEED=1  # we can always extend the number of runs by keeping NUM_REPS=1 and then increment INIT_SEED
+NUM_REPS=1
+INIT_SEED=$1  # we can always extend the number of runs by keeping NUM_REPS=1 and then increment INIT_SEED
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIG_DIR=configs/mol_bench
 USE_WANDB=False
@@ -27,7 +27,7 @@ launch () {
 
     name="${dataset}-${model}+${pse}"
     run_script="python main.py --cfg ${CONFIG_DIR}/${name}.yaml --repeat ${NUM_REPS} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
-    full_script="${job_script}${run_script} name_tag ${model}+GPSEOBE posenc_GPSE.model_dir pretrained_models/gpseobe_molpcba.pt posenc_GPSE.rand_type BernoulliOSE"
+    full_script="${job_script}${run_script} name_tag ${model}+GPSE- posenc_GPSE.model_dir pretrained_models/gpse-_molpcba.pt posenc_GPSE.rand_type FixedSE"
 
     echo "$full_script"  # print out the command
     eval "$full_script"  # execute the command
@@ -42,6 +42,9 @@ launch zinc GCN GPSE
 
 launch zinc GatedGCN GPSE
 
-# MolHIV
+launch pcqm4msubset GPS GPSE
+
 launch molhiv GPS GPSE
+
+launch molpcba GPS GPSE
 
