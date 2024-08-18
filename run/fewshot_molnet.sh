@@ -28,7 +28,7 @@ for config in ${CONFIGS[@]}; do
 
     if [[ $WRAPPER != "local" ]]; then
         mkdir -p ${ROOT_DIR}/slurm_history
-        run_script="sbatch -t 0-01:00:00 -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script} dataset.umg_split True"
+        run_script="sbatch -t 0-02:00:00 -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script} dataset.umg_split True"
     fi
 
     launch () {
