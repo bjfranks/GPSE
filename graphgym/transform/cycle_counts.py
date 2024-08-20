@@ -194,7 +194,7 @@ def count_cycles(k_list: List[int], data):
             count_dict[size] += 1
     cycle_counts = [count_dict[k] for k in k_list]
 
-    print(cycle_counts)
+    print(cycle_counts, flush=True)
 
     hamcycles = get_all_k_hamcycles(data.edge_index, data.num_nodes,
                                     max(k_list), False)
@@ -205,6 +205,6 @@ def count_cycles(k_list: List[int], data):
             count_dict[size] += 1
     cycle_counts = [count_dict[k] for k in k_list]
 
-    print(cycle_counts)
+    print(cycle_counts, flush=True)
 
     return torch.FloatTensor(cycle_counts).unsqueeze(0)
