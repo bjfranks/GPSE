@@ -42,7 +42,7 @@ posenc_HKdiagSE:
   enable: true
   kernel:
     times_func: range(1,21)
-randenc_NormalSE:
+randenc_FixedSE:
   enable: true
   dim_pe: 20
 graphenc_CycleGE:
