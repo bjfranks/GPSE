@@ -1160,8 +1160,8 @@ def get_unique_mol_graphs_via_smiles(
     # Add arbitrary new "unique" graphs. Below random regular graphs are added.
     # They could be non-unique but this is very unlikely.
     if cfg.dataset.extra_graphs:
-        for reg in range(5, 10):
-            for _ in range(50):
+        for reg in range(cfg.dataset.extra_graphs_low, cfg.dataset.extra_graphs_high):
+            for _ in range(cfg.dataset.extra_graphs_num):
                 g = from_networkx(nx.random_regular_graph(reg, 24))
                 g.x = torch.zeros(24, 9)
                 unique_graphs.append(g)

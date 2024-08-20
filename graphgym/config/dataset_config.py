@@ -30,6 +30,9 @@ def dataset_cfg(cfg):
     # graphs (ignoring atom and bond types)
     cfg.dataset.unique_mol_graphs = False
     cfg.dataset.extra_graphs = False
+    cfg.dataset.extra_graphs_low = 5
+    cfg.dataset.extra_graphs_high = 10
+    cfg.dataset.extra_graphs_num = 50
     cfg.dataset.umg_split = False
     cfg.dataset.umg_train_ratio = 0.8
     cfg.dataset.umg_val_ratio = 0.1
