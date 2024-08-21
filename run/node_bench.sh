@@ -22,7 +22,7 @@ cd $ROOT_DIR
 
 if [[ $WRAPPER != "local" ]]; then
     mkdir -p ${ROOT_DIR}/slurm_history
-    job_script="sbatch -c 5 -t 1-0 --mem=60GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb "
+    job_script="sbatch -c 5 -t 1-0 -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb "
 fi
 
 launch () {
@@ -40,10 +40,8 @@ launch () {
 
 for conv_layer in ${CONV_LAYERS[@]}; do
     launch arxiv none $conv_layer
-    launch arxiv LapPE $conv_layer
     launch arxiv GPSE $conv_layer
     launch proteins none $conv_layer
-    launch proteins LapPE $conv_layer
     launch proteins GPSE $conv_layer
 done
 
@@ -61,8 +59,6 @@ launch2 () {
 }
 
 launch2 arxiv none GPS
-launch2 arxiv LapPE GPS
 launch2 arxiv GPSE GPS
 launch2 proteins none Transformer
-launch2 proteins LapPE Transformer
 launch2 proteins GPSE Transformer
