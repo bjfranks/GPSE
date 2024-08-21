@@ -22,7 +22,7 @@ cd $ROOT_DIR
 
 if [[ $WRAPPER != "local" ]]; then
     mkdir -p ${ROOT_DIR}/slurm_history
-    job_script="sbatch -c 5 --mem=60GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb "
+    job_script="sbatch -c 5 -t 1-0 --mem=60GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb "
 fi
 
 launch () {
@@ -53,7 +53,7 @@ launch2 () {
     model=$3
 
     run_script="python main.py --cfg ${CONFIG_DIR}/${dataset}-${model}+${pse}.yaml --repeat ${NUM_REPS} "
-    run_script+="name_tag ${conv}+${pse} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
+    run_script+="name_tag ${model}+${pse} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
     full_script="${job_script}${run_script}"
 
     echo $full_script  # print out the command
