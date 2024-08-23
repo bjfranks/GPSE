@@ -1,8 +1,8 @@
 #!/usr/bin/bash --login
 
 # Global settings
-NUM_REPS=$2
-INIT_SEED=$3
+NUM_REPS=$3
+INIT_SEED=$4
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
 AllPSE
@@ -24,6 +24,7 @@ for config in ${CONFIGS[@]}; do
     if [[ $WRAPPER != "local" ]]; then
         mkdir -p ${ROOT_DIR}/slurm_history
         run_script="sbatch -t 0-02:00:00 -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script} dataset.umg_split True"
+        run_script+=$2
     fi
 
     launch () {
