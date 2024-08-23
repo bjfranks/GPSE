@@ -32,7 +32,7 @@ launch () {
 
     config=${CONFIG_DIR}/${dataset}-GINE+${PSE_MODE}.yaml
     run_script="python main.py --cfg ${config} --repeat ${NUM_REPS} seed ${INIT_SEED} wandb.use ${USE_WANDB}"
-    full_script="${job_script} ${run_script} name_tag GINE+GPSEO posenc_GPSE.model_dir pretrained_models/gpseo_molpcba.pt posenc_GPSE.rand_type UniformOSE"
+    full_script="${job_script} ${run_script} name_tag GINE+GPSE- posenc_GPSE.model_dir pretrained_models/gpse-_molpcba.pt posenc_GPSE.rand_type FixedSE"
 
     echo $full_script  # print out the command
     eval $full_script  # execute the command
