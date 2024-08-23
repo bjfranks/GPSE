@@ -1,11 +1,11 @@
 #!/usr/bin/bash --login
 
 # Global settings
-NUM_REPS=$3
-INIT_SEED=$4
+NUM_REPS=$4
+INIT_SEED=$5
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
-AllPSE
+GPSE
 )
 USE_WANDB=False
 #################
@@ -33,12 +33,12 @@ for config in ${CONFIGS[@]}; do
         eval $command  # execute the command
     }
 
-    launch "${run_script} name_tag train_size_128 dataset.umg_train_ratio 0.00625"
-    launch "${run_script} name_tag train_size_64 dataset.umg_train_ratio 0.0125"
-    launch "${run_script} name_tag train_size_32 dataset.umg_train_ratio 0.025"
-    launch "${run_script} name_tag train_size_16 dataset.umg_train_ratio 0.05"
-    launch "${run_script} name_tag train_size_8 dataset.umg_train_ratio 0.1"
-    launch "${run_script} name_tag train_size_4 dataset.umg_train_ratio 0.2"
-    launch "${run_script} name_tag train_size_2 dataset.umg_train_ratio 0.4"
-    launch "${run_script} name_tag train_size_1"
+    launch "${run_script} name_tag $3train_size_128 dataset.umg_train_ratio 0.00625"
+    launch "${run_script} name_tag $3train_size_64 dataset.umg_train_ratio 0.0125"
+    launch "${run_script} name_tag $3train_size_32 dataset.umg_train_ratio 0.025"
+    launch "${run_script} name_tag $3train_size_16 dataset.umg_train_ratio 0.05"
+    launch "${run_script} name_tag $3train_size_8 dataset.umg_train_ratio 0.1"
+    launch "${run_script} name_tag $3train_size_4 dataset.umg_train_ratio 0.2"
+    launch "${run_script} name_tag $3train_size_2 dataset.umg_train_ratio 0.4"
+    launch "${run_script} name_tag $3train_size_1"
 done
