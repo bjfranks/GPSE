@@ -337,7 +337,7 @@ def load_dataset_master(format, name, dataset_dir):
                                                    cfg.dataset.umg_test_ratio,
                                                    cfg.dataset.umg_random_seed)
 
-    if cfg.dataset.umg_split:
+    if False:#cfg.dataset.umg_split:
         dataset = umg_split(dataset,
                             cfg.dataset.umg_train_ratio,
                             cfg.dataset.umg_val_ratio,
