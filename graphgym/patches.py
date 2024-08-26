@@ -85,9 +85,7 @@ def create_loader():
     if cfg.dataset.task == 'graph':
         id = dataset.data['train_graph_index']
         if cfg.dataset.umg_split:
-            print(len(id), cfg.dataset.umg_train_ratio)
             id = id[torch.randperm(len(id))[:int(len(id)*cfg.dataset.umg_train_ratio/0.8)]]
-            print(len(id))
         loaders = [
             get_loader(dataset[id], cfg.train.sampler, cfg.train.batch_size,
                        node_split_name=None, shuffle=True)
