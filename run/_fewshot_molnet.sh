@@ -1,11 +1,11 @@
 #!/usr/bin/bash --login
 
 # Global settings
-NUM_REPS=$4
-INIT_SEED=$5
+NUM_REPS=$5
+INIT_SEED=$6
 WRAPPER=wrapper_rptu  # local, wrapper_msuicer, wrapper_mila, wrapper_rptu
 CONFIGS=(
-GPSE
+$4
 )
 USE_WANDB=False
 #################
