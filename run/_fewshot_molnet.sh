@@ -23,7 +23,7 @@ for config in ${CONFIGS[@]}; do
 
     if [[ $WRAPPER != "local" ]]; then
         mkdir -p ${ROOT_DIR}/slurm_history
-        run_script="sbatch -t 0-02:00:00 -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script}"
+        run_script="sbatch -t 0-02:00:00 -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script} dataset.umg_split True"
         run_script+=$2
     fi
 
@@ -33,12 +33,11 @@ for config in ${CONFIGS[@]}; do
         eval $command  # execute the command
     }
 
-    launch "${run_script} name_tag $3train_size_128 dataset.subset_ratio 0.0078125"
-    launch "${run_script} name_tag $3train_size_64 dataset.subset_ratio 0.015625"
-    launch "${run_script} name_tag $3train_size_32 dataset.subset_ratio 0.03125"
-    launch "${run_script} name_tag $3train_size_16 dataset.subset_ratio 0.0625"
-    launch "${run_script} name_tag $3train_size_8 dataset.subset_ratio 0.125"
-    launch "${run_script} name_tag $3train_size_4 dataset.subset_ratio 0.25"
-    launch "${run_script} name_tag $3train_size_2 dataset.subset_ratio 0.5"
-    launch "${run_script} name_tag $3train_size_1"
+    launch "${run_script} name_tag "$3"train_size_64 dataset.umg_train_ratio 0.0125"
+    launch "${run_script} name_tag "$3"train_size_32 dataset.umg_train_ratio 0.025"
+    launch "${run_script} name_tag "$3"train_size_16 dataset.umg_train_ratio 0.05"
+    launch "${run_script} name_tag "$3"train_size_8 dataset.umg_train_ratio 0.1"
+    launch "${run_script} name_tag "$3"train_size_4 dataset.umg_train_ratio 0.2"
+    launch "${run_script} name_tag "$3"train_size_2 dataset.umg_train_ratio 0.4"
+    launch "${run_script} name_tag "$3"train_size_1"
 done
