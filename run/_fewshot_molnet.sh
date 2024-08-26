@@ -33,12 +33,12 @@ for config in ${CONFIGS[@]}; do
         eval $command  # execute the command
     }
 
-    launch "${run_script} name_tag $3train_size_128 dataset.subset_ratio 0.00625"
-    launch "${run_script} name_tag $3train_size_64 dataset.subset_ratio 0.0125"
-    launch "${run_script} name_tag $3train_size_32 dataset.subset_ratio 0.025"
-    launch "${run_script} name_tag $3train_size_16 dataset.subset_ratio 0.05"
-    launch "${run_script} name_tag $3train_size_8 dataset.subset_ratio 0.1"
-    launch "${run_script} name_tag $3train_size_4 dataset.subset_ratio 0.2"
-    launch "${run_script} name_tag $3train_size_2 dataset.subset_ratio 0.4"
+    launch "${run_script} name_tag $3train_size_128 dataset.subset_ratio 0.0078125"
+    launch "${run_script} name_tag $3train_size_64 dataset.subset_ratio 0.015625"
+    launch "${run_script} name_tag $3train_size_32 dataset.subset_ratio 0.03125"
+    launch "${run_script} name_tag $3train_size_16 dataset.subset_ratio 0.0625"
+    launch "${run_script} name_tag $3train_size_8 dataset.subset_ratio 0.125"
+    launch "${run_script} name_tag $3train_size_4 dataset.subset_ratio 0.25"
+    launch "${run_script} name_tag $3train_size_2 dataset.subset_ratio 0.5"
     launch "${run_script} name_tag $3train_size_1"
 done
