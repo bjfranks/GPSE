@@ -83,6 +83,9 @@ def create_loader():
     # train loader
     if cfg.dataset.task == 'graph':
         id = dataset.data['train_graph_index']
+        print(dataset, len(dataset))
+        print(id, len(id))
+        print(id[:len(dataset)], len(id[:len(dataset)]))
         loaders = [
             get_loader(dataset[id[:len(dataset)]], cfg.train.sampler, cfg.train.batch_size,
                        node_split_name=None, shuffle=True)
