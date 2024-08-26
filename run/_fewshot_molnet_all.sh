@@ -32,6 +32,6 @@ cd $ROOT_DIR
 
 for dataset in ${DATASETS[@]}; do
     for seed in ${SEEDS[@]}; do
-        sh run/_fewshot_molnet.sh dataset $1 $2 1 seed
+        sh run/_fewshot_molnet.sh ${dataset} $1 $2 1 ${seed}
     done
 done
