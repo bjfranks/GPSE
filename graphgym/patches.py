@@ -84,7 +84,7 @@ def create_loader():
     if cfg.dataset.task == 'graph':
         print(dataset)
         id = dataset.data['train_graph_index']
-        print(id)
+        print(id, len(id))
         print(dataset[id], cfg.train.sampler, cfg.train.batch_size)
         loaders = [
             get_loader(dataset[id], cfg.train.sampler, cfg.train.batch_size,
