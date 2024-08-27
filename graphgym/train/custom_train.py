@@ -73,7 +73,6 @@ def train_epoch(logger, loader, model, optimizer, scheduler, batch_accumulation)
             batch_idx = process_batch_idx(batch.batch, true)
         else:
             if cfg.gnn.head == 'node':
-                print(batch.keys())
                 batch['train_mask'] = torch.ones(batch.x.shape[0], dtype=torch.bool)
             pred, true = model(batch)
             pred, true = ensure_transductive_batch(pred, true, batch)
@@ -122,6 +121,8 @@ def eval_epoch(logger, loader, model, split='val'):
         if cfg.gnn.head == 'inductive_edge':
             pred, true, extra_stats = model(batch)
         else:
+            if cfg.gnn.head == 'node':
+                batch['val_mask'] = torch.ones(batch.x.shape[0], dtype=torch.bool)
             pred, true = model(batch)
             extra_stats = {}
         pred, true = ensure_transductive_batch(pred, true, batch)
