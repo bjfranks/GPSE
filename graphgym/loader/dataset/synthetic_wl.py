@@ -39,7 +39,7 @@ class SyntheticWL(InMemoryDataset):
         transform: Optional[Callable] = None,
         pre_transform: Optional[Callable] = None,
         pre_filter: Optional[Callable] = None,
-        extrapolate = False,
+        extrapolate=False,
     ):
         self.name = name
 
@@ -48,7 +48,7 @@ class SyntheticWL(InMemoryDataset):
             self.data, self.slices = torch.load(self.processed_paths[1])
         else:
             self.data, self.slices = torch.load(self.processed_paths[0])
-            if name == "trix":
+            if self._name == "trix":
                 self.test = SyntheticWL(root, name, transform, pre_transform, pre_filter)
 
     def __repr__(self) -> str:
