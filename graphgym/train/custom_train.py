@@ -72,6 +72,9 @@ def train_epoch(logger, loader, model, optimizer, scheduler, batch_accumulation)
             loss, pred_score, true = optimizer.flag(model, batch, compute_loss)
             batch_idx = process_batch_idx(batch.batch, true)
         else:
+            if cfg.gnn.head == 'node':
+                print(batch.keys())
+                batch['train_mask'] = torch.ones(batch.x.shape)
             pred, true = model(batch)
             pred, true = ensure_transductive_batch(pred, true, batch)
             batch_idx = process_batch_idx(batch.batch, true)

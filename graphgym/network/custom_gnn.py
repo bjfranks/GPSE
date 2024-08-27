@@ -39,7 +39,6 @@ class CustomGNN(torch.nn.Module):
                                      residual=cfg.gnn.residual))
         self.gnn_layers = torch.nn.Sequential(*layers)
 
-        print(register.head_dict.keys())
         GNNHead = register.head_dict[cfg.gnn.head]
         self.post_mp = GNNHead(dim_in=cfg.gnn.dim_inner, dim_out=dim_out)
 
