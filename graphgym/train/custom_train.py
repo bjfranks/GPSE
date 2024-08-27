@@ -72,7 +72,6 @@ def train_epoch(logger, loader, model, optimizer, scheduler, batch_accumulation)
             loss, pred_score, true = optimizer.flag(model, batch, compute_loss)
             batch_idx = process_batch_idx(batch.batch, true)
         else:
-            print(batch)
             pred, true = model(batch)
             pred, true = ensure_transductive_batch(pred, true, batch)
             batch_idx = process_batch_idx(batch.batch, true)
