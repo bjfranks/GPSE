@@ -685,8 +685,11 @@ def preformat_SyntheticWL(dataset_dir, name):
     if name.lower() == "sr25":
         # Evaluate on training, so train/val/test are the same split
         dataset = join_dataset_splits([deepcopy(dataset) for _ in range(3)])
-    if name.lower() == "tri":
+    if name.lower() == "tri" :
         pre_transform_in_memory(dataset, T.Constant(cat=False))
+    if name.lower() == "trix":
+        pre_transform_in_memory(dataset, T.Constant(cat=False))
+        pre_transform_in_memory(dataset.test, T.Constant(cat=False))
     return dataset
 
 
