@@ -11,6 +11,7 @@ dataset:
   task: node
   task_type: classification
   transductive: false
+  split_mode: random
   node_encoder: true
   node_encoder_name: GPSE
 posenc_GPSE:
