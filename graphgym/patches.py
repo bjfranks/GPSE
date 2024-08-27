@@ -14,7 +14,6 @@ from torch_geometric.graphgym.loader import create_dataset
 
 
 def get_loader(dataset, sampler, batch_size, node_split_name, shuffle=True):
-    print(len(dataset))
     if sampler == "full_batch" or len(dataset) > 1:
         loader_train = DataLoader(dataset, batch_size=batch_size,
                                   shuffle=shuffle, num_workers=cfg.num_workers,
@@ -83,7 +82,7 @@ def create_loader():
     """
     dataset = create_dataset()
     # train loader
-    if cfg.dataset.task == 'graph':
+    if cfg.dataset.task == 'graph' or cfg.train.sampler == 'full_batch':
         id = dataset.data['train_graph_index']
         if cfg.dataset.umg_split:
             id = id[torch.randperm(len(id))[:int(len(id)*cfg.dataset.umg_train_ratio/0.8)]]
@@ -100,7 +99,7 @@ def create_loader():
 
     # val and test loaders
     for i in range(cfg.share.num_splits - 1):
-        if cfg.dataset.task == 'graph':
+        if cfg.dataset.task == 'graph' or cfg.train.sampler == 'full_batch':
             split_names = ['val_graph_index', 'test_graph_index']
             id = dataset.data[split_names[i]]
             loaders.append(
