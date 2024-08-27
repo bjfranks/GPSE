@@ -92,6 +92,7 @@ def create_loader():
         ]
         delattr(dataset.data, 'train_graph_index')
     else:
+        print(dataset)
         loaders = [
             get_loader(dataset, cfg.train.sampler, cfg.train.batch_size,
                        node_split_name="train", shuffle=True)
