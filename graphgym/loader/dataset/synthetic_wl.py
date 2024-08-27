@@ -63,6 +63,8 @@ class SyntheticWL(InMemoryDataset):
             self.download = self._download_sr25
             self._process_data_list = self._process_data_list_sr25
             self._raw_file_names = ["sr251256.g6"]
+        elif name == "tri":
+            self._process_data_list = self._process_data_list_tri
         else:
             raise ValueError(f"Unrecognized dataset name {name!r}, available "
                              f"options are: {self._supported_datasets}")
@@ -142,6 +144,27 @@ class SyntheticWL(InMemoryDataset):
             y = torch.LongTensor([i])
             data_list.append(Data(x=x, edge_index=edge_index, y=y))
         return data_list
+
+    def _process_data_list_tri(self):
+        return generate_triangle_graphs()
+
+
+def generate_triangle_graphs(num_graphs=1000, num_nodes=20):
+    data_set = []
+    for _ in range(num_graphs):
+        G = nx.random_regular_graph(3, num_nodes)
+        dict = nx.triangles(G)
+        edge_index = [[],[]]
+        labels = [0]*num_nodes
+        for u, v, _ in G.edges(data=True):
+            edge_index[0] += [u, v]
+            edge_index[1] += [v, u]
+        for key, value in dict.items():
+            labels[key] = int(value>0)
+        data = Data(edge_index=torch.tensor(edge_index), y=torch.tensor(labels))
+        data.num_nodes = num_nodes
+        data_set += [data]
+    return data_set
 
 
 if __name__ == "__main__":
