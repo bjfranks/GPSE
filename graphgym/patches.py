@@ -14,7 +14,7 @@ from torch_geometric.graphgym.loader import create_dataset
 
 
 def get_loader(dataset, sampler, batch_size, node_split_name, shuffle=True):
-    print(, sampler, batch_size, node_split_name, shuffle)
+    print(sampler, batch_size, node_split_name, shuffle)
     if sampler == "full_batch" or len(dataset) > 1:
         loader_train = DataLoader(dataset, batch_size=batch_size,
                                   shuffle=shuffle, num_workers=cfg.num_workers,
