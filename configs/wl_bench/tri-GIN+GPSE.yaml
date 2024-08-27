@@ -12,7 +12,7 @@ dataset:
   task: node
   task_type: classification
   transductive: false
-  split_mode: cv-stratifiedkfold-5
+  split_mode: cv-kfold-5
   split_dir: splits
   node_encoder: true
   node_encoder_name: GPSE
