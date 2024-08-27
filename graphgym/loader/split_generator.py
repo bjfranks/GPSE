@@ -155,6 +155,7 @@ def set_dataset_splits(dataset, splits):
     if task_level == 'node':
         split_names = ['train_mask', 'val_mask', 'test_mask']
         for split_name, split_index in zip(split_names, splits):
+            print(split_index)
             mask = index2mask(split_index, size=dataset.data.y.shape[0])
             set_dataset_attr(dataset, split_name, mask, len(mask))
 
