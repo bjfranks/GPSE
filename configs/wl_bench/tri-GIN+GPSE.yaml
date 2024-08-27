@@ -2,6 +2,7 @@
 name_tag: GIN+GPSE
 out_dir: results
 metric_best: accuracy
+run_multiple_splits: [0, 1, 2, 3, 4]
 wandb:
   use: false
   project: GPSE-TRI
@@ -11,7 +12,8 @@ dataset:
   task: node
   task_type: classification
   transductive: false
-  split_mode: random
+  split_mode: cv-kfold-5
+  split_dir: splits
   node_encoder: true
   node_encoder_name: GPSE
 posenc_GPSE:
