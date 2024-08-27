@@ -123,6 +123,7 @@ def eval_epoch(logger, loader, model, split='val'):
         else:
             if cfg.gnn.head == 'node':
                 batch['val_mask'] = torch.ones(batch.x.shape[0], dtype=torch.bool)
+                batch['test_mask'] = torch.ones(batch.x.shape[0], dtype=torch.bool)
             pred, true = model(batch)
             extra_stats = {}
         pred, true = ensure_transductive_batch(pred, true, batch)
