@@ -421,6 +421,8 @@ def load_dataset_master(format, name, dataset_dir):
     # Precompute GPSE if it is enabled
     if cfg.posenc_GPSE.enable:
         precompute_gpse(cfg, dataset)
+        if dataset._name=="trix":
+            precompute_gpse(cfg, dataset.test)
 
     # Precompute GraphLog embeddings if it is enabled
     if cfg.posenc_GraphLog.enable:
