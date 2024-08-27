@@ -14,6 +14,7 @@ from torch_geometric.graphgym.loader import create_dataset
 
 
 def get_loader(dataset, sampler, batch_size, node_split_name, shuffle=True):
+    print(, sampler, batch_size, node_split_name, shuffle)
     if sampler == "full_batch" or len(dataset) > 1:
         loader_train = DataLoader(dataset, batch_size=batch_size,
                                   shuffle=shuffle, num_workers=cfg.num_workers,
@@ -92,7 +93,6 @@ def create_loader():
         ]
         delattr(dataset.data, 'train_graph_index')
     else:
-        print(dataset)
         loaders = [
             get_loader(dataset, cfg.train.sampler, cfg.train.batch_size,
                        node_split_name="train", shuffle=True)
