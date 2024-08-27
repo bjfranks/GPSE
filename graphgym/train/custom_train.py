@@ -46,7 +46,6 @@ def train_epoch(logger, loader, model, optimizer, scheduler, batch_accumulation)
     model.train()
     optimizer.zero_grad()
     time_start = time.time()
-    print(loader)
     for iter, batch in enumerate(loader):
         batch.split = 'train'
         batch.to(torch.device(cfg.accelerator))
