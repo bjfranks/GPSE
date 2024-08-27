@@ -28,6 +28,8 @@ class SyntheticWL(InMemoryDataset):
         "exp",
         "cexp",
         "sr25",
+        "tri",
+        "trix"
     ]
 
     def __init__(
@@ -37,11 +39,17 @@ class SyntheticWL(InMemoryDataset):
         transform: Optional[Callable] = None,
         pre_transform: Optional[Callable] = None,
         pre_filter: Optional[Callable] = None,
+        extrapolate = False,
     ):
         self.name = name
 
         super().__init__(root, transform, pre_transform, pre_filter)
-        self.data, self.slices = torch.load(self.processed_paths[0])
+        if extrapolate:
+            self.data, self.slices = torch.load(self.processed_paths[1])
+        else:
+            self.data, self.slices = torch.load(self.processed_paths[0])
+            if name == "trix":
+                self.test = SyntheticWL(root, name, transform, pre_transform, pre_filter)
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({len(self):,}, name={self.name!r})"
@@ -63,7 +71,7 @@ class SyntheticWL(InMemoryDataset):
             self.download = self._download_sr25
             self._process_data_list = self._process_data_list_sr25
             self._raw_file_names = ["sr251256.g6"]
-        elif name == "tri":
+        elif name == "tri" or name == "trix":
             self._process_data_list = self._process_data_list_tri
         else:
             raise ValueError(f"Unrecognized dataset name {name!r}, available "
@@ -85,7 +93,7 @@ class SyntheticWL(InMemoryDataset):
 
     @property
     def processed_file_names(self) -> str:
-        return "data.pt"
+        return ["data.pt", "test.pt"]
 
     def process(self):
         data_list = self._process_data_list()
@@ -99,6 +107,17 @@ class SyntheticWL(InMemoryDataset):
         print(f"{self.processed_paths[0]=}")
 
         torch.save(self.collate(data_list), self.processed_paths[0])
+
+        if self._name == "trix":
+            data_list = self._process_data_list(num_nodes=100)
+
+            if self.pre_filter is not None:
+                data_list = [data for data in data_list if self.pre_filter(data)]
+
+            if self.pre_transform is not None:
+                data_list = [self.pre_transform(data) for data in data_list]
+
+            torch.save(self.collate(data_list), self.processed_paths[1])
 
     def _download_exp(self):
         filename = self.raw_file_names[0]
@@ -145,8 +164,8 @@ class SyntheticWL(InMemoryDataset):
             data_list.append(Data(x=x, edge_index=edge_index, y=y))
         return data_list
 
-    def _process_data_list_tri(self):
-        return generate_triangle_graphs()
+    def _process_data_list_tri(self, num_nodes=20):
+        return generate_triangle_graphs(num_nodes=num_nodes)
 
 
 def generate_triangle_graphs(num_graphs=1000, num_nodes=20):

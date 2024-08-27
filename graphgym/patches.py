@@ -102,9 +102,14 @@ def create_loader():
         if cfg.dataset.task == 'graph' or cfg.train.sampler == 'full_batch':
             split_names = ['val_graph_index', 'test_graph_index']
             id = dataset.data[split_names[i]]
-            loaders.append(
-                get_loader(dataset[id], cfg.val.sampler, cfg.train.batch_size,
-                           node_split_name=None, shuffle=False))
+            if dataset._name == "trix" and split_names[i] == 'test_graph_index':
+                loaders.append(
+                    get_loader(dataset.test, cfg.val.sampler, cfg.train.batch_size,
+                               node_split_name=None, shuffle=False))
+            else:
+                loaders.append(
+                    get_loader(dataset[id], cfg.val.sampler, cfg.train.batch_size,
+                               node_split_name=None, shuffle=False))
             delattr(dataset.data, split_names[i])
         else:
             split_names = ['val', 'test']
