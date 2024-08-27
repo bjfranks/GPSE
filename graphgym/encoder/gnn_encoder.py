@@ -162,6 +162,7 @@ class GNNNodeEncoder(nn.Module):
         pos_enc = self.dropout_ae(pos_enc)
 
         # Expand node features if needed
+        print(batch.x)
         h = self.linear_x(batch.x) if self.expand_x else batch.x
 
         # Concatenate final PEs to input embedding
