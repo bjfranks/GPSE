@@ -9,7 +9,7 @@ wandb:
 dataset:
   format: SyntheticWL
   name: TRI
-  task: node
+  task: graph
   task_type: classification
   transductive: false
   split_mode: cv-kfold-5
@@ -20,7 +20,7 @@ posenc_GPSE:
   enable: true
   rand_type: NormalSE
   model_dir: pretrained_models/gpse_molpcba.pt
-  dim_pe: 128
+  dim_pe: 64
   model: Linear
   use_repr: true
   repr_type: no_post_mp
