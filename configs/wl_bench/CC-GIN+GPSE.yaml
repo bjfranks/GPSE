@@ -1,7 +1,7 @@
 ---
 name_tag: GIN+GPSE
 out_dir: results
-metric_best: accuracy
+metric_best: mae
 wandb:
   use: false
   project: GPSE-TRI
