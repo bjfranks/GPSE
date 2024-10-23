@@ -79,6 +79,7 @@ class SyntheticWL(InMemoryDataset):
             self._process_data_list = self._process_data_list_tri
         elif name == "sc":
             self._process_data_list = self._process_data_list_SC
+            self._raw_file_names = ["data.mat"]
         else:
             raise ValueError(f"Unrecognized dataset name {name!r}, available "
                              f"options are: {self._supported_datasets}")
@@ -197,7 +198,6 @@ class SyntheticWL(InMemoryDataset):
                 # data_list = [self.pre_transform(data) for data in data_list]
             data, slices = self.collate(data_list)
             torch.save((data, slices), save_path)
-        self.split_idxs
 
     def adj2data(self, A, y):
         begin, end = np.where(A == 1.)
