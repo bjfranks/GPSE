@@ -179,7 +179,7 @@ class SyntheticWL(InMemoryDataset):
         # process npy data into pyg.Data
         print('Processing data from ' + self.raw_dir + '...')
         raw_data = scio.loadmat(self.raw_paths[0])
-        data_list = [[self.adj2data(raw_data['A'][0][i], raw_data['F'][0][i]) for i in range(5000)]]
+        data_list = [self.adj2data(raw_data['A'][0][i], raw_data['F'][0][i]) for i in range(5000)]
         if self.pre_filter is not None:
             data_list = [data for data in data_list if self.pre_filter(data)]
         if self.pre_transform is not None:
