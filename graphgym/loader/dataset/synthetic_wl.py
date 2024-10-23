@@ -197,8 +197,7 @@ class SyntheticWL(InMemoryDataset):
                     temp.append(self.pre_transform(data))
                 data_list = temp
                 # data_list = [self.pre_transform(data) for data in data_list]
-            data, slices = self.collate(data_list)
-            torch.save((data, slices), save_path)
+        return data_list
 
     def adj2data(self, A, y):
         begin, end = np.where(A == 1.)
