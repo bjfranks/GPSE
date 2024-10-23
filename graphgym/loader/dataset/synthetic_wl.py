@@ -44,6 +44,9 @@ class SyntheticWL(InMemoryDataset):
         pre_filter: Optional[Callable] = None,
         extrapolate=False,
     ):
+        if name.startswith("cc") or name.startswith("cg"):
+            target = int(name[2:])
+            name = name[:2]
         self.name = name
 
         super().__init__(root, transform, pre_transform, pre_filter)
@@ -53,8 +56,13 @@ class SyntheticWL(InMemoryDataset):
             self.data, self.slices = torch.load(self.processed_paths[0])
             if self._name == "trix":
                 self.test = SyntheticWL(root, name, transform, pre_transform, pre_filter, extrapolate=True)
-        if self.name == "cc" or self.name == "cg":
+        if name.startswith("cc") or name.startswith("cg"):
             self.split_idxs = SC_indices
+            y_train_val = torch.cat([self.data.y[self.split_idxs[0]], self.data.y[self.split_idxs[1]]], dim=0)
+            mean = y_train_val.mean(dim=0)
+            std = y_train_val.std(dim=0)
+            self.data.y = (self.data.y-mean)/std
+            self.data.y = self.data.y[:, target]
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({len(self):,}, name={self.name!r})"
@@ -78,7 +86,7 @@ class SyntheticWL(InMemoryDataset):
             self._raw_file_names = ["sr251256.g6"]
         elif name == "tri" or name == "trix":
             self._process_data_list = self._process_data_list_tri
-        elif name == "cc" or name == "cg":
+        elif name.startswith("cc") or name.startswith("cg"):
             self._process_data_list = self._process_data_list_SC
             self._raw_file_names = ["data.mat"]
         else:

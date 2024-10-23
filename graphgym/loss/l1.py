@@ -7,8 +7,8 @@ from torch_geometric.graphgym.register import register_loss
 def l1_losses(pred, true):
     if cfg.model.loss_fun == 'l1':
         l1_loss = nn.L1Loss()
-        print(pred)
-        print(true)
+        print(pred.shape)
+        print(true.shape)
         loss = l1_loss(pred, true)
         return loss, pred
     elif cfg.model.loss_fun == 'smoothl1':
