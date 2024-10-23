@@ -194,12 +194,11 @@ class SyntheticWL(InMemoryDataset):
     def adj2data(self, A, y):
         begin, end = np.where(A == 1.)
         edge_index = torch.tensor(np.array([begin, end]))
-        num_nodes = A.shape[0]
         if y.ndim == 1:
             y = y.reshape([1, -1])
-        x = torch.tensor([1.0]*num_nodes)
-        x = x[:, None]
-        return Data(edge_index=edge_index, y=torch.tensor(y), x=x)
+        data = Data(edge_index=edge_index, y=torch.tensor(y))
+        data.num_nodes = A.shape[0]
+        return data
 
 
 def generate_triangle_graphs(num_graphs=1000, num_nodes=20):
