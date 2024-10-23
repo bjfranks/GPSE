@@ -1,6 +1,7 @@
 ---
 name_tag: GIN+GPSE
 out_dir: results
+metric_agg: argmin
 metric_best: mae
 wandb:
   use: false
@@ -69,4 +70,4 @@ optim:
   scheduler: reduce_on_plateau
   reduce_factor: 0.9
   schedule_patience: 10
-  min_lr: 1e-7
+  min_lr: 1e-5
