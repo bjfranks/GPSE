@@ -179,24 +179,16 @@ class SyntheticWL(InMemoryDataset):
         # process npy data into pyg.Data
         print('Processing data from ' + self.raw_dir + '...')
         raw_data = scio.loadmat(self.raw_paths[0])
-        if raw_data['F'].shape[0] == 1:
-            data_list_all = [[self.adj2data(raw_data['A'][0][i], raw_data['F'][0][i]) for i in idx]
-                             for idx in [raw_data['train_idx'][0], raw_data['val_idx'][0], raw_data['test_idx'][0]]]
-        else:
-            data_list_all = [[self.adj2data(A, y) for A, y in zip(raw_data['A'][0][idx][0], raw_data['F'][idx][0])]
-                             for idx in [raw_data['train_idx'], raw_data['val_idx'], raw_data['test_idx']]]
-        for save_path, data_list in zip(self.processed_paths, data_list_all):
-            print('pre-transforming for data at' + save_path)
-            if self.pre_filter is not None:
-                data_list = [data for data in data_list if self.pre_filter(data)]
-            if self.pre_transform is not None:
-                temp = []
-                for i, data in enumerate(data_list):
-                    if i % 100 == 0:
-                        print('Pre-processing %d/%d' % (i, len(data_list)))
-                    temp.append(self.pre_transform(data))
-                data_list = temp
-                # data_list = [self.pre_transform(data) for data in data_list]
+        data_list = [[self.adj2data(raw_data['A'][0][i], raw_data['F'][0][i]) for i in range(5000)]]
+        if self.pre_filter is not None:
+            data_list = [data for data in data_list if self.pre_filter(data)]
+        if self.pre_transform is not None:
+            temp = []
+            for i, data in enumerate(data_list):
+                if i % 100 == 0:
+                    print('Pre-processing %d/%d' % (i, len(data_list)))
+                temp.append(self.pre_transform(data))
+            data_list = temp
         return data_list
 
     def adj2data(self, A, y):
