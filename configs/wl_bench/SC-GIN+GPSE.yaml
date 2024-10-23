@@ -7,7 +7,7 @@ wandb:
   project: GPSE-TRI
 dataset:
   format: SyntheticWL
-  name: SC
+  name: sc
   task: graph
   task_type: regression
   transductive: false

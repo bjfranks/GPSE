@@ -30,7 +30,8 @@ class SyntheticWL(InMemoryDataset):
         "cexp",
         "sr25",
         "tri",
-        "trix"
+        "trix",
+        "sc"
     ]
 
     def __init__(
@@ -51,7 +52,7 @@ class SyntheticWL(InMemoryDataset):
             self.data, self.slices = torch.load(self.processed_paths[0])
             if self._name == "trix":
                 self.test = SyntheticWL(root, name, transform, pre_transform, pre_filter, extrapolate=True)
-        if self.name == "SC":
+        if self.name == "sc":
             self.split_idxs = SC_indices
 
     def __repr__(self) -> str:
@@ -76,7 +77,7 @@ class SyntheticWL(InMemoryDataset):
             self._raw_file_names = ["sr251256.g6"]
         elif name == "tri" or name == "trix":
             self._process_data_list = self._process_data_list_tri
-        elif name == "SC":
+        elif name == "sc":
             self._process_data_list = self._process_data_list_SC
         else:
             raise ValueError(f"Unrecognized dataset name {name!r}, available "
