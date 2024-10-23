@@ -50,6 +50,7 @@ model:
   loss_fun: l1
   edge_decoding: dot
 gnn:
+  head: node
   layers_pre_mp: 0
   layers_mp: 5
   layers_post_mp: 1
