@@ -34,7 +34,6 @@ run_script="python main.py --cfg configs/wl_bench/CC-GIN+GPSE.yaml "
 if [[ $WRAPPER != "local" ]]; then
     mkdir -p ${ROOT_DIR}/slurm_history
     run_script="sbatch -t 0-02:00:00 -c 5 --mem=45GB -o ${ROOT_DIR}/slurm_history/slurm-%A.out run/${WRAPPER}.sb ${run_script}"
-    run_script+=$2
 fi
 
 launch () {
