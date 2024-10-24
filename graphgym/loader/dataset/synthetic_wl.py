@@ -48,8 +48,9 @@ class SyntheticWL(InMemoryDataset):
             target = int(name[2:])
             name = name[:2]
         self.name = name
-        print(self.processed_dir)
         super().__init__(root, transform, pre_transform, pre_filter)
+        print(self.processed_dir)
+        print(self.processed_paths)
         if extrapolate:
             self.data, self.slices = torch.load(self.processed_paths[1])
         else:
