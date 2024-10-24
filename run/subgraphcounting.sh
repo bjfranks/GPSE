@@ -14,7 +14,7 @@ SEEDS=(
 9
 10
 )
-Experiments=(
+EXPERIMENTS=(
 0
 1
 2
@@ -56,7 +56,7 @@ for exp in ${EXPERIMENTS[@]}; do
     done
 done
 
-Experiments=(
+EXPERIMENTS=(
 0
 1
 2
