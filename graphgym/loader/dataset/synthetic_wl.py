@@ -58,10 +58,14 @@ class SyntheticWL(InMemoryDataset):
         if name.startswith("cc") or name.startswith("cg"):
             self.split_idxs = SC_indices
             y_train_val = torch.cat([self.data.y[self.split_idxs[0]], self.data.y[self.split_idxs[1]]], dim=0)
+            print(y_train_val)
             mean = y_train_val.mean(dim=0)
             std = y_train_val.std(dim=0)
+            print(mean, std)
+            print(self.data.y)
             self.data.y = (self.data.y-mean)/std
             self.data.y = self.data.y[:, target]
+            print(self.data.y)
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({len(self):,}, name={self.name!r})"
