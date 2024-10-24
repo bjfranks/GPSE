@@ -49,8 +49,6 @@ class SyntheticWL(InMemoryDataset):
             name = name[:2]
         self.name = name
         super().__init__(root, transform, pre_transform, pre_filter)
-        print(self.processed_dir)
-        print(self.processed_paths)
         if extrapolate:
             self.data, self.slices = torch.load(self.processed_paths[1])
         else:
@@ -110,7 +108,7 @@ class SyntheticWL(InMemoryDataset):
 
     @property
     def processed_file_names(self) -> str:
-        return ["data.pt", "test.pt"]
+        return ["data.pt"]
 
     def process(self):
         data_list = self._process_data_list()
