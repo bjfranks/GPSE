@@ -44,15 +44,15 @@ launch () {
 
 for exp in ${EXPERIMENTS[@]}; do
     for seed in ${SEEDS[@]}; do
-        launch "${run_script} dataset.name cc${exp} name_tag GPSE seed ${seed}"
+        launch "${run_script} dataset.name cc${exp} name_tag GPSE#${exp} seed ${seed}"
     done
 
     for seed in ${SEEDS[@]}; do
-        launch "${run_script} dataset.name cc${exp} posenc_GPSE.model_dir pretrained_models/gpse+_molpcba.pt name_tag GPSE+ seed ${seed}"
+        launch "${run_script} dataset.name cc${exp} posenc_GPSE.model_dir pretrained_models/gpse+_molpcba.pt name_tag GPSE+#${exp} seed ${seed}"
     done
 
     for seed in ${SEEDS[@]}; do
-        launch "${run_script} dataset.name cc${exp} posenc_GPSE.model_dir pretrained_models/gpse-_molpcba.pt posenc_GPSE.rand_type FixedSE name_tag GPSE- seed ${seed}"
+        launch "${run_script} dataset.name cc${exp} posenc_GPSE.model_dir pretrained_models/gpse-_molpcba.pt posenc_GPSE.rand_type FixedSE name_tag GPSE-#${exp} seed ${seed}"
     done
 done
 
@@ -65,14 +65,14 @@ EXPERIMENTS=(
 )
 for exp in ${EXPERIMENTS[@]}; do
     for seed in ${SEEDS[@]}; do
-        launch "${run_script} dataset.name cg${exp} name_tag GPSE seed ${seed}"
+        launch "${run_script} dataset.name cg${exp} name_tag GPSE_${exp} seed ${seed}"
     done
 
     for seed in ${SEEDS[@]}; do
-        launch "${run_script} dataset.name cg${exp} posenc_GPSE.model_dir pretrained_models/gpse+_molpcba.pt name_tag GPSE+ seed ${seed}"
+        launch "${run_script} dataset.name cg${exp} posenc_GPSE.model_dir pretrained_models/gpse+_molpcba.pt name_tag GPSE+_${exp} seed ${seed}"
     done
 
     for seed in ${SEEDS[@]}; do
-        launch "${run_script} dataset.name cg${exp} posenc_GPSE.model_dir pretrained_models/gpse-_molpcba.pt posenc_GPSE.rand_type FixedSE name_tag GPSE- seed ${seed}"
+        launch "${run_script} dataset.name cg${exp} posenc_GPSE.model_dir pretrained_models/gpse-_molpcba.pt posenc_GPSE.rand_type FixedSE name_tag GPSE-_${exp} seed ${seed}"
     done
 done
