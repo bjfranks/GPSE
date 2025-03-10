@@ -1,5 +1,21 @@
 # Towards Graph Foundation Models: A Study on the Generalization of Positional and Structural Encodings
 
+This repository contains the code of [Towards Graph Foundation Models: A Study on the Generalization of Positional and Structural Encodings](https://openreview.net/forum?id=mSoDRZXsqj).
+
+## Cite as
+```
+@article{
+franks2025towards,
+title={Towards Graph Foundation Models: A Study on the Generalization of Positional and Structural Encodings},
+author={Billy Joe Franks and Moshe Eliasof and Semih Cant{\"u}rk and Guy Wolf and Carola-Bibiane Sch{\"o}nlieb and Sophie Fellenz and Marius Kloft},
+journal={Transactions on Machine Learning Research},
+issn={2835-8856},
+year={2025},
+url={https://openreview.net/forum?id=mSoDRZXsqj},
+note={Reproducibility Certification}
+}
+```
+
 ## Installation
 
 This codebase is built on top of
